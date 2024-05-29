@@ -1,14 +1,15 @@
 <?php
-class db
+class data
 {
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
     private $database = 'uprak_dzaral';
     private $koneksi;
+    private $ambil_data;
+    private $modifikasi_data;
 
-    // Method untuk melakukan koneksi ke database
-    public function koneksi()
+    public function koneksi()   
     {
         $this->koneksi = new mysqli($this->host, $this->username, $this->password, $this->database);
         if ($this->koneksi->connect_error) {
@@ -16,19 +17,20 @@ class db
         }
     }
 
-    
-    public function ambil_data($query) {
-        $result = $this->koneksi->query($query);
-        $data = array();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
+    public function ambil_data($query)
+    {
+        $this->koneksi();
+        $hasil = $this->koneksi->query($query);
+        $item = array();
+        if ($hasil->num_rows > 0) {
+            while ($row = $hasil->fetch_assoc()) {
+                $item[] = $row;
             }
         }
-        return $data;
+        return $item;
     }
 
-    public function modifikasi($query) {
+    public function modifikasi_data($query) {
         if ($this->koneksi->query($query) === TRUE) {
             return true;
         } else {

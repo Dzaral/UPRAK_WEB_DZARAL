@@ -1,3 +1,20 @@
+<?php 
+include "../../config/connect_db.php";
+
+
+$query = 'SELECT * FROM spp WHERE id=' . $_GET['id'];
+
+$hasil = $koneksi->query($query);
+
+$spp = $hasil->fetch_assoc();
+
+if (isset($_POST['id'])) {
+    $query = 'UPDATE spp SET id="' . $_POST['id'] . '", tahun="' . $_POST['tahun']
+        . '", nominal="' . $_POST['nominal'] . '" WHERE id=' . $_GET['id'];
+    $koneksi->query($query);
+    header('location:spp.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +26,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>TAMBAH SPP</title>
 
     <!-- Custom fonts for this template-->
     <link href="../../assetss/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,44 +54,25 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                    </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="id" name="id" aria-describedby="emailHelp"value="<?= $spp['id'] ?>"
+                                                placeholder="Masukkan id">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="tahun" name="tahun" aria-describedby="emailHelp"value="<?= $spp['tahun'] ?>"
+                                                placeholder="Masukkan tahun">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
+                                            <input type="text" class="form-control form-control-user"value="<?= $spp['nominal'] ?>"
+                                                id="nominal" name="nominal" placeholder="Masukkan nominal">
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        <a href="spp.php" class="btn btn-primary btn-user btn-block">
+                                            TAMBAH
                                         </a>
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
